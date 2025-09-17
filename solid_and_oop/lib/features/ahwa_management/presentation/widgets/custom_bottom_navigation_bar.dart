@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solid_and_oop/config/theme/app_colors.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
@@ -100,7 +101,7 @@ class _NavItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = isSelected
-        ? Theme.of(context).colorScheme.primary
+        ? AppColors.primary
         : const Color(0xFF9CA3AF);
 
     return RepaintBoundary(
