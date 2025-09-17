@@ -195,3 +195,29 @@ flutter test
 
 ## License
 This project is provided as-is for learning and demonstration purposes.
+
+---
+
+## Screenshots (Mobile)
+
+Place PNGs under `assets/screenshots/` with the names below, or adjust the paths.
+
+<p align="center">
+  <img src="assets/screenshots/mobile_reports.png" alt="Reports Page" width="280"/>
+  <img src="assets/screenshots/mobile_add_order.png" alt="Add Order Page" width="280"/>
+  <img src="assets/screenshots/mobile_dashboard.png" alt="Dashboard Page" width="280"/>
+</p>
+
+<p align="center">
+  <img src="assets/screenshots/mobile_reports_top.png" alt="Reports Summary" width="280"/>
+  <img src="assets/screenshots/mobile_date_picker.png" alt="Date Picker" width="280"/>
+  <img src="assets/screenshots/mobile_empty_dashboard.png" alt="Empty Dashboard" width="280"/>
+</p>
+
+Suggested filenames to copy into `assets/screenshots/`:
+- `mobile_dashboard.png`
+- `mobile_empty_dashboard.png`
+- `mobile_add_order.png`
+- `mobile_reports.png`
+- `mobile_reports_top.png`
+- `mobile_date_picker.png`
