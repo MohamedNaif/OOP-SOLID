@@ -11,7 +11,7 @@ enum DrinkType {
   const DrinkType(this.arabicName);
 }
 
-// Base class using OOP Inheritance
+
 abstract class MenuItem {
   final String id;
   final String name;
