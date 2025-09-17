@@ -1,6 +1,6 @@
 // class LocalNotificationService {
 //   void send(String message) {
-//     print('Sending local notification: $message');
+//     log('Sending local notification: $message');
 //   }
 // }
 
@@ -14,6 +14,8 @@
 
 
 //? solution 
+import 'dart:developer';
+
 abstract class Notifier {
   void send(String message);
 }
@@ -22,7 +24,7 @@ abstract class Notifier {
 class LocalNotificationService implements Notifier {
   @override
   void send(String message) {
-    print('Sending local notification: $message');
+    log('Sending local notification: $message');
   }
 }
 
@@ -30,7 +32,7 @@ class LocalNotificationService implements Notifier {
 class PushNotificationService implements Notifier {
   @override
   void send(String message) {
-    print('Sending push notification: $message');
+    log('Sending push notification: $message');
   }
 }
 

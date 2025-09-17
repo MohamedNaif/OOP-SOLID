@@ -7,9 +7,9 @@
 
 // class SimpleButtonController implements WidgetController {
 //   @override
-//   void initState() => print('Init button');
+//   void initState() => log('Init button');
 //   @override
-//   void dispose() => print('Dispose button');
+//   void dispose() => log('Dispose button');
 //   @override
 //   void handleAnimation() =>
 //       throw UnimplementedError('No animationin simple button');
@@ -17,6 +17,8 @@
 //   void handleNetwork() => throw UnimplementedError('No network in button ');
 // }
 
+
+import 'dart:developer';
 
 /// Core controller for all widgets
 abstract class BaseController {
@@ -37,33 +39,33 @@ abstract class NetworkControllerMixin {
 /// Simple button controller → only cares about init/dispose
 class SimpleButtonController implements BaseController {
   @override
-  void initState() => print('Init button');
+  void initState() => log('Init button');
 
   @override
-  void dispose() => print('Dispose button');
+  void dispose() => log('Dispose button');
 }
 
 /// Fancy widget controller → supports animation
 class FancyWidgetController implements BaseController, AnimationControllerMixin {
   @override
-  void initState() => print('Init fancy widget');
+  void initState() => log('Init fancy widget');
 
   @override
-  void dispose() => print('Dispose fancy widget');
+  void dispose() => log('Dispose fancy widget');
 
   @override
-  void handleAnimation() => print('Handle animation in fancy widget');
+  void handleAnimation() => log('Handle animation in fancy widget');
 }
 
 /// Networked widget controller → supports network
 class NetworkedWidgetController
     implements BaseController, NetworkControllerMixin {
   @override
-  void initState() => print('Init network widget');
+  void initState() => log('Init network widget');
 
   @override
-  void dispose() => print('Dispose network widget');
+  void dispose() => log('Dispose network widget');
 
   @override
-  void handleNetwork() => print('Handle network request');
+  void handleNetwork() => log('Handle network request');
 }

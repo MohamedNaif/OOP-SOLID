@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:solid_and_oop/features/ahwa_management/presentation/pages/add_order_page.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/pages/dashboard_page.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/pages/reports_page.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/custom_bottom_navigation_bar.dart';
@@ -34,11 +33,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: false,
-      // appBar: AppBar(
-      //   title: const Text('Smart Ahwa Manager'),
-      //   centerTitle: true,
-      // ),
       body: SafeArea(child: _getCurrentPage()),
       bottomNavigationBar: CustomBottomNavigationBar(
         selectedIndex: _selectedIndex,

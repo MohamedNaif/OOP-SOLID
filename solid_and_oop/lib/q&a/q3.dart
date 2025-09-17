@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // class Screen {
@@ -42,7 +43,9 @@ abstract class Screen {}
 class HomeScreen extends Screen implements Navigable {
   @override
   void navigate(BuildContext context) {
-    print('Navigating to Home');
+    if (kDebugMode) {
+      print('Navigating to Home');
+    }
     // Example: Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
   }
 }

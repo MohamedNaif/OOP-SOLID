@@ -21,7 +21,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     );
 
     final items = const [
-      _NavItem(icon: Icons.list_alt, label: 'الطلبات'),
+      _NavItem(icon: Icons.list_alt, label: 'الرئيسية'),
       _NavItem(icon: Icons.assessment, label: 'التقارير'),
     ];
 
