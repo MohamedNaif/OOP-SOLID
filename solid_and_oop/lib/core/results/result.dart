@@ -13,7 +13,7 @@ sealed class Result<T> {
     } else if (self is FailureResult<T>) {
       return onFailure(self.failure);
     }
-    throw StateError('Unhandled ApiResult state');
+    throw StateError('Unhandled Result state');
   }
 
   bool get isSuccess => this is Success<T>;

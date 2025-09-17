@@ -31,7 +31,7 @@ class OrderCubit extends Cubit<OrderState> {
 
     result.fold((failure) => emit(OrderError(failure.message)), (orders) {
       pendingOrders = orders;
-      emit(OrdersLoaded(orders: allOrders, pendingOrders: orders));
+      emit(OrdersLoaded(orders: orders, pendingOrders: orders));
     });
   }
 

@@ -1,22 +1,30 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/cubit/ahwa_management_cubit.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/cubit/ahwa_management_state.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/report_card.dart';
 
-class ReportsPage extends StatelessWidget {
+class ReportsPage extends StatefulWidget {
   const ReportsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Generate report for today
-    context.read<OrderCubit>().generateDailyReport(DateTime.now());
+  State<ReportsPage> createState() => _ReportsPageState();
+}
 
+class _ReportsPageState extends State<ReportsPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OrderCubit>().generateDailyReport(DateTime.now());
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('التقارير')),
+      appBar: AppBar(title: const Text('التقارير'), centerTitle: true),
       body: BlocBuilder<OrderCubit, OrderState>(
+        buildWhen: (previous, current) =>
+            current is ReportGenerated || current is OrderError,
         builder: (context, state) {
           if (state is ReportGenerated) {
             final report = state.report;
@@ -31,9 +39,13 @@ class ReportsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('إجمالي الطلبات: ${report.totalOrders}'),
-                        Text('الإيرادات: ${report.totalRevenue.toStringAsFixed(2)} جنيه'),
+                        Text(
+                          'الإيرادات: ${report.totalRevenue.toStringAsFixed(2)} جنيه',
+                        ),
                         if (report.topSellingDrink != null)
-                          Text('أكتر حاجة اتطلبت: ${report.topSellingDrink!.arabicName}'),
+                          Text(
+                            'أكتر حاجة اتطلبت: ${report.topSellingDrink!.arabicName}',
+                          ),
                       ],
                     ),
                   ),

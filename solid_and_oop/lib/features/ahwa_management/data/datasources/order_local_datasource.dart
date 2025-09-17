@@ -30,7 +30,9 @@ class OrderLocalDataSourceImpl implements OrderLocalDataSource {
   @override
   Future<List<OrderModel>> getPendingOrders() async {
     final allOrders = await getAllOrders();
-    return allOrders.where((order) => order.status == OrderStatus.pending).toList();
+    return allOrders
+        .where((order) => order.status == OrderStatus.pending)
+        .toList();
   }
 
   @override

@@ -1,63 +1,35 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/cubit/ahwa_management_cubit.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/cubit/ahwa_management_state.dart';
-import 'package:solid_and_oop/features/ahwa_management/presentation/pages/add_order_page.dart';
-import 'package:solid_and_oop/features/ahwa_management/presentation/pages/reports_page.dart';
+import 'package:solid_and_oop/config/routing/app_router.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/order_card.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OrderCubit>().loadPendingOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Smart Ahwa Manager'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.assessment),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<OrderCubit>(),
-                    child: const ReportsPage(),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
+        centerTitle: true,
       ),
       body: BlocBuilder<OrderCubit, OrderState>(
         builder: (context, state) {
           if (state is OrderLoading) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is OrdersLoaded) {
-            if (state.pendingOrders.isEmpty) {
-              return const Center(
-                child: Text(
-                  'مفيش طلبات دلوقتي',
-                  style: TextStyle(fontSize: 20),
-                ),
-              );
-            }
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: state.pendingOrders.length,
-              itemBuilder: (context, index) {
-                final order = state.pendingOrders[index];
-                return OrderCard(
-                  order: order,
-                  onComplete: () {
-                    context.read<OrderCubit>().markOrderAsCompleted(order);
-                  },
-                );
-              },
-            );
           } else if (state is OrderError) {
             return Center(
               child: Text(
@@ -66,21 +38,29 @@ class DashboardPage extends StatelessWidget {
               ),
             );
           }
-          return const SizedBox.shrink();
+          final pendingOrders = context.read<OrderCubit>().pendingOrders;
+          if (pendingOrders.isEmpty) {
+            return const Center(
+              child: Text('مفيش طلبات دلوقتي', style: TextStyle(fontSize: 20)),
+            );
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: pendingOrders.length,
+            itemBuilder: (context, index) {
+              final order = pendingOrders[index];
+              return OrderCard(
+                order: order,
+                onComplete: () {
+                  context.read<OrderCubit>().markOrderAsCompleted(order);
+                },
+              );
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => BlocProvider.value(
-                value: context.read<OrderCubit>(),
-                child: const AddOrderPage(),
-              ),
-            ),
-          );
-        },
+        onPressed: () => Navigator.pushNamed(context, AppRouter.addOrder),
         child: const Icon(Icons.add),
       ),
     );
