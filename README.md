@@ -180,7 +180,69 @@ initialRoute: AppRouter.home,
 
 - `shared_preferences` stores serialized `OrderModel` list
 
+
 ---
+
+## Architecture Diagrams
+
+### Sequence: Add Order (إضافة طلب)
+
+```mermaid
+sequenceDiagram
+  actor User as User
+  participant AP as AddOrderPage
+  participant C as OrderCubit
+  participant U as AddOrder UC
+  participant R as OrderRepository
+  participant D as OrderLocalDS
+  participant S as SharedPreferences
+
+  User->>AP: ضغط Submit
+  AP->>C: addNewOrder(params)
+  C->>U: call(params)
+  U->>R: addOrder(order)
+  R->>D: addOrder(OrderModel)
+  D->>S: حفظ Array JSON
+  D-->>R: OrderModel (entity)
+  R-->>U: Result< Order >
+  U-->>C: Result< Order >
+  C-->>AP: emit(OrderAdded) + refresh
+```
+
+### Sequence: Daily Report (تقرير اليوم)
+
+```mermaid
+sequenceDiagram
+  participant RP as ReportsPage
+  participant C as OrderCubit
+  participant U as GenerateReports UC
+  participant R as OrderRepository
+  participant D as OrderLocalDS
+  participant S as SharedPreferences
+
+  RP->>C: generateDailyReport(date)
+  C->>U: call(date)
+  U->>R: generateDailyReport(date)
+  R->>D: getAllOrders()
+  D->>S: read JSON
+  D-->>R: List<OrderModel>
+  R-->>U: Result<DailyReport>
+  U-->>C: Result<DailyReport>
+  C-->>RP: emit(ReportGenerated)
+```
+
+### Dependency Injection (get_it)
+
+```mermaid
+graph LR
+  A[di.dart] -->|registerSingleton| DS(OrderLocalDataSourceImpl)
+  A -->|registerLazySingleton| R(OrderRepositoryImpl)
+  A -->|registerFactory| U1(AddOrder) & U2(CompleteOrder) & U3(GetPendingOrders) & U4(GenerateReports)
+  A -->|registerFactory| C(OrderCubit)
+```
+
+---
+
 
 ## Development
 
