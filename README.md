@@ -226,14 +226,14 @@ This project is provided as-is for learning and demonstration purposes.
 
 Images are stored at the repo root in `screenshots/`. The paths below are relative to this README:
 
-<p align="center">
+<p align="right">
   <img src="screenshots/Screenshot_1758102900.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102871.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102839.png"  width="280"/>
  
 </p>
 
-<p align="center">
+<p align="right">
   <img src="screenshots/Screenshot_1758102885.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102910.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102881.png" width="280"/>
