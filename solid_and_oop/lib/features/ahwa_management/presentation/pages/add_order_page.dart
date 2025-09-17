@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solid_and_oop/features/ahwa_management/domain/entities/drink.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/cubit/ahwa_management_cubit.dart';
+import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/add_orders_widgets/custom_text_form_field.dart';
+import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/add_orders_widgets/form_section.dart';
+import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/add_orders_widgets/submit_button.dart';
 import 'package:solid_and_oop/features/ahwa_management/presentation/widgets/drink_dropdown.dart';
 
 class AddOrderPage extends StatefulWidget {
@@ -191,10 +194,10 @@ class _AddOrderPageState extends State<AddOrderPage>
                         const SizedBox(height: 8),
 
                         // Customer Name Field
-                        _FormSection(
+                        FormSection(
                           title: 'بيانات الزبون',
                           icon: Icons.person,
-                          child: _CustomTextFormField(
+                          child: CustomTextFormField(
                             controller: _customerNameController,
                             label: 'اسم الزبون',
                             hint: 'أدخل اسم الزبون',
@@ -214,7 +217,7 @@ class _AddOrderPageState extends State<AddOrderPage>
                         const SizedBox(height: 24),
 
                         // Drink Selection
-                        _FormSection(
+                        FormSection(
                           title: 'اختيار المشروب',
                           icon: Icons.local_cafe,
                           child: DrinkDropdown(
@@ -230,10 +233,10 @@ class _AddOrderPageState extends State<AddOrderPage>
                         const SizedBox(height: 24),
 
                         // Special Instructions
-                        _FormSection(
+                        FormSection(
                           title: 'طلبات خاصة (اختياري)',
                           icon: Icons.note_alt_outlined,
-                          child: _CustomTextFormField(
+                          child: CustomTextFormField(
                             controller: _specialInstructionsController,
                             label: 'زيادات',
                             hint: 'مثلاً: نعناع زيادة ',
@@ -246,7 +249,7 @@ class _AddOrderPageState extends State<AddOrderPage>
                         const SizedBox(height: 40),
 
                         // Submit Button
-                        _SubmitButton(
+                        SubmitButton(
                           onPressed: _isSubmitting ? null : _submitOrder,
                           isLoading: _isSubmitting,
                         ),
@@ -260,202 +263,6 @@ class _AddOrderPageState extends State<AddOrderPage>
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _FormSection extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Widget child;
-
-  const _FormSection({
-    required this.title,
-    required this.icon,
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.08),
-            spreadRadius: 1,
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.brown.shade50,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: Colors.brown.shade100,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(icon, color: Colors.brown.shade700, size: 18),
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.brown.shade800,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(padding: const EdgeInsets.all(16), child: child),
-        ],
-      ),
-    );
-  }
-}
-
-class _CustomTextFormField extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  final String hint;
-  final IconData prefixIcon;
-  final String? Function(String?)? validator;
-  final int maxLines;
-  final bool isOptional;
-
-  const _CustomTextFormField({
-    required this.controller,
-    required this.label,
-    required this.hint,
-    required this.prefixIcon,
-    this.validator,
-    this.maxLines = 1,
-    this.isOptional = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      validator: validator,
-      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        prefixIcon: Icon(prefixIcon, color: Colors.brown.shade600),
-
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.brown.shade600, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.red.shade400, width: 2),
-        ),
-        filled: true,
-        fillColor: Colors.grey.shade50,
-        contentPadding: const EdgeInsets.all(16),
-        labelStyle: TextStyle(
-          color: Colors.brown.shade600,
-          fontWeight: FontWeight.w500,
-        ),
-        hintStyle: TextStyle(color: Colors.grey.shade500, fontSize: 14),
-      ),
-    );
-  }
-}
-
-class _SubmitButton extends StatelessWidget {
-  final VoidCallback? onPressed;
-  final bool isLoading;
-
-  const _SubmitButton({this.onPressed, this.isLoading = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 56,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        gradient: LinearGradient(
-          colors: onPressed != null
-              ? [Colors.brown.shade600, Colors.brown.shade800]
-              : [Colors.grey.shade400, Colors.grey.shade500],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        boxShadow: onPressed != null
-            ? [
-                BoxShadow(
-                  color: Colors.brown.shade600.withValues(alpha: 0.3),
-                  spreadRadius: 1,
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ]
-            : [],
-      ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        child: isLoading
-            ? const SizedBox(
-                height: 24,
-                width: 24,
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2,
-                ),
-              )
-            : const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.add_shopping_cart, color: Colors.white, size: 24),
-                  SizedBox(width: 8),
-                  Text(
-                    'إضافة الطلب',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
       ),
     );
   }

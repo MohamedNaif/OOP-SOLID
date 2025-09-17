@@ -245,8 +245,6 @@ class _DrinkDropdownState extends State<DrinkDropdown>
         return 'مشروب دافئ بالحليب';
       case DrinkType.yansoon:
         return 'مشروب عشبي دافئ';
-      default:
-        return '';
-    }
+      }
   }
 }

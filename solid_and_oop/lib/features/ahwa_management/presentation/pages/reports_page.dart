@@ -247,7 +247,7 @@ class _ReportsPageState extends State<ReportsPage>
                               children: [
                                 Expanded(
                                   child: SummaryCard(
-                                    title: 'الطلبات',
+                                    title: 'إجمالي الطلبات',
                                     value: '${report.totalOrders}',
                                     icon: Icons.shopping_cart,
                                     color: Colors.blue,
@@ -256,7 +256,7 @@ class _ReportsPageState extends State<ReportsPage>
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: SummaryCard(
-                                    title: 'الإيرادات',
+                                    title: 'إجمالي الإيرادات',
                                     value:
                                         '${report.totalRevenue.toStringAsFixed(0)} ج.م',
                                     icon: Icons.attach_money,
