@@ -3,6 +3,7 @@
 A clean-architecture Flutter app demonstrating SOLID principles with a small cafe (ahwa) management domain: orders, pending orders dashboard, and daily reports. It uses BLoC for state management, get_it for DI, and a lightweight `Result<T>` to handle success/failure (no dartz).
 
 ### Features
+
 - Dashboard with pending orders
 - Add new order (animated, validated form)
 - Generate daily report (summary and breakdown)
@@ -14,6 +15,7 @@ A clean-architecture Flutter app demonstrating SOLID principles with a small caf
 - Custom generic `Result<T>` replacing `Either`
 
 ### Tech Stack
+
 - Flutter 3.x (Dart 3)
 - BLoC / flutter_bloc
 - get_it (DI)
@@ -24,20 +26,24 @@ A clean-architecture Flutter app demonstrating SOLID principles with a small caf
 ## Getting Started
 
 ### Prerequisites
+
 - Flutter SDK installed and configured
 - Dart SDK (bundled with Flutter)
 
 ### Install Dependencies
+
 ```bash
 flutter pub get
 ```
 
 ### Run
+
 ```bash
 flutter run
 ```
 
 ### Build
+
 ```bash
 # Android (APK)
 flutter build apk --release
@@ -116,6 +122,7 @@ solid_and_oop/
 ```
 
 Guiding principles:
+
 - Presentation uses BLoC/Cubit and pure Widgets only
 - Domain is UI-agnostic (entities, use cases, contracts)
 - Data implements repositories and persistence (mappers/models/datasources)
@@ -125,7 +132,9 @@ Guiding principles:
 ## Architecture Notes
 
 ### Result<T>
+
 The app uses a minimal generic result type instead of `dartz`:
+
 ```dart
 sealed class Result<T> {
   const Result();
@@ -134,33 +143,41 @@ sealed class Result<T> {
 class Success<T> extends Result<T> { final T data; const Success(this.data); }
 class FailureResult<T> extends Result<T> { final Failure failure; const FailureResult(this.failure); }
 ```
+
 Use cases and repositories return `Future<Result<Out>>`, and UI handles outcomes with `fold`.
 
 ### Use Cases
+
 - Encapsulate one action each (e.g., `AddOrder`, `CompleteOrder`)
 - Implement `Future<Result<Out>> call(Params)`
 
 ### Routing
+
 Central `AppRouter` exposes static route names and an `onGenerateRoute`:
+
 - `/` → `HomePage`
 - `/add-order` → `AddOrderPage`
 - `/reports` → `ReportsPage`
 
 MaterialApp configuration:
+
 ```dart
 onGenerateRoute: AppRouter.onGenerateRoute,
 initialRoute: AppRouter.home,
 ```
 
 ### State Management
+
 - `OrderCubit` manages orders, pending orders, and report generation
 - UI subscribes with `BlocBuilder` and emits domain-driven states
 
 ### Dependency Injection
+
 - `di.dart` registers data sources, repositories, and use cases via `get_it`
 - `main.dart` creates and provides the `OrderCubit`
 
 ### Persistence
+
 - `shared_preferences` stores serialized `OrderModel` list
 
 ---
@@ -168,34 +185,40 @@ initialRoute: AppRouter.home,
 ## Development
 
 ### Linting
+
 ```bash
 flutter analyze
 ```
 
 ### Tests
+
 (Add tests as needed in `test/`.)
+
 ```bash
 flutter test
 ```
 
 ### Localization
+
 - Arabic-first labels and samples
 - Extend via `assets/translations` and your preferred localization setup
 
 ### Theming
+
 - Centralized in `config/theme/*` (colors, text styles, theme)
 
 ---
 
 ## Contributing
+
 - Follow the existing architecture and code style
 - Keep widgets declarative and side-effect free
 - Prefer small, focused use cases
 - Write clear commit messages and PR descriptions
 
 ## License
-This project is provided as-is for learning and demonstration purposes.
 
+This project is provided as-is for learning and demonstration purposes.
 
 ---
 
@@ -207,12 +230,18 @@ Images are stored at the repo root in `screenshots/`. The paths below are relati
   <img src="screenshots/Screenshot_1758102900.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102871.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102839.png"  width="280"/>
-  <img src="screenshots/Screenshot_1758102885.png"  width="280"/>
+ 
 </p>
 
 <p align="center">
+  <img src="screenshots/Screenshot_1758102885.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102910.png"  width="280"/>
+</p>
+
+
+
+
+<p align="center">
   <img src="screenshots/Screenshot_1758102881.png" width="280"/>
   <img src="screenshots/Screenshot_1758102848.png"  width="280"/>
 </p>
-
