@@ -13,83 +13,76 @@ class OrderCubit extends Cubit<OrderState> {
   final CompleteOrder completeOrderUseCase;
   final GetPendingOrders getPendingOrdersUseCase;
   final GenerateReports generateReportsUseCase;
-  
+
   List<Order> allOrders = [];
   List<Order> pendingOrders = [];
-  
+
   OrderCubit({
     required this.addOrderUseCase,
     required this.completeOrderUseCase,
     required this.getPendingOrdersUseCase,
     required this.generateReportsUseCase,
   }) : super(OrderInitial());
-  
+
   Future<void> loadPendingOrders() async {
     emit(OrderLoading());
-    
+
     final result = await getPendingOrdersUseCase(NoParams());
-    
-    result.fold(
-      (failure) => emit(OrderError(failure.message)),
-      (orders) {
-        pendingOrders = orders;
-        emit(OrdersLoaded(orders: allOrders, pendingOrders: orders));
-      },
-    );
+
+    result.fold((failure) => emit(OrderError(failure.message)), (orders) {
+      pendingOrders = orders;
+      emit(OrdersLoaded(orders: allOrders, pendingOrders: orders));
+    });
   }
-  
+
   Future<void> addNewOrder({
     required String customerName,
     required DrinkType drinkType,
     String? specialInstructions,
   }) async {
     emit(OrderLoading());
-    
+
     final params = AddOrderParams(
       customerName: customerName,
       drinkType: drinkType,
       specialInstructions: specialInstructions,
     );
-    
+
     final result = await addOrderUseCase(params);
-    
-    result.fold(
-      (failure) => emit(OrderError(failure.message)),
-      (order) {
-        allOrders.add(order);
-        pendingOrders.add(order);
-        emit(OrderAdded(order));
-        loadPendingOrders();
-      },
-    );
+
+    result.fold((failure) => emit(OrderError(failure.message)), (order) {
+      allOrders.add(order);
+      pendingOrders.add(order);
+      emit(OrderAdded(order));
+      loadPendingOrders();
+    });
   }
-  
+
   Future<void> markOrderAsCompleted(Order order) async {
     emit(OrderLoading());
-    
+
     final params = CompleteOrderParams(order: order);
     final result = await completeOrderUseCase(params);
-    
-    result.fold(
-      (failure) => emit(OrderError(failure.message)),
-      (completedOrder) {
-        pendingOrders.removeWhere((o) => o.id == completedOrder.id);
-        final index = allOrders.indexWhere((o) => o.id == completedOrder.id);
-        if (index != -1) {
-          allOrders[index] = completedOrder;
-        }
-        emit(OrderCompleted(completedOrder));
-        loadPendingOrders();
-      },
-    );
+
+    result.fold((failure) => emit(OrderError(failure.message)), (
+      completedOrder,
+    ) {
+      pendingOrders.removeWhere((o) => o.id == completedOrder.id);
+      final index = allOrders.indexWhere((o) => o.id == completedOrder.id);
+      if (index != -1) {
+        allOrders[index] = completedOrder;
+      }
+      emit(OrderCompleted(completedOrder));
+      loadPendingOrders();
+    });
   }
-  
+
   Future<void> generateDailyReport(DateTime date) async {
     emit(OrderLoading());
-    
+
     final params = GenerateReportsParams(date: date);
     final result = await generateReportsUseCase(params);
-    
+
     result.fold(
       (failure) => emit(OrderError(failure.message)),
       (report) => emit(ReportGenerated(report)),

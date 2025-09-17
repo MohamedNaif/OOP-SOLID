@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart';
-import 'package:solid_and_oop/core/errors/failures.dart';
+import 'package:solid_and_oop/core/results/result.dart';
 import 'package:solid_and_oop/core/usecases/usecase.dart';
 import 'package:solid_and_oop/features/ahwa_management/domain/entities/report.dart';
 import 'package:solid_and_oop/features/ahwa_management/domain/repositories/order_repository.dart';
@@ -10,7 +9,7 @@ class GenerateReports extends UseCase<DailyReport, GenerateReportsParams> {
   GenerateReports(this.repository);
 
   @override
-  Future<Either<Failure, DailyReport>> call(GenerateReportsParams params) async {
+  Future<Result<DailyReport>> call(GenerateReportsParams params) async {
     return await repository.generateDailyReport(params.date);
   }
 }

@@ -1,5 +1,4 @@
-import 'package:dartz/dartz.dart' hide Order;
-import 'package:solid_and_oop/core/errors/failures.dart';
+import 'package:solid_and_oop/core/results/result.dart';
 import 'package:solid_and_oop/core/usecases/usecase.dart';
 import 'package:solid_and_oop/features/ahwa_management/domain/entities/drink.dart';
 import 'package:solid_and_oop/features/ahwa_management/domain/entities/order.dart';
@@ -11,7 +10,7 @@ class AddOrder extends UseCase<Order, AddOrderParams> {
   AddOrder(this.repository);
 
   @override
-  Future<Either<Failure, Order>> call(AddOrderParams params) async {
+  Future<Result<Order>> call(AddOrderParams params) async {
     final order = Order(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       customerName: params.customerName,
