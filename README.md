@@ -236,12 +236,13 @@ Images are stored at the repo root in `screenshots/`. The paths below are relati
 <p align="center">
   <img src="screenshots/Screenshot_1758102885.png"  width="280"/>
   <img src="screenshots/Screenshot_1758102910.png"  width="280"/>
+  <img src="screenshots/Screenshot_1758102881.png" width="280"/>
+
 </p>
 
 
 
 
-<p align="center">
-  <img src="screenshots/Screenshot_1758102881.png" width="280"/>
+<p align="right">
   <img src="screenshots/Screenshot_1758102848.png"  width="280"/>
 </p>
